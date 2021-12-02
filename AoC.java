@@ -1,6 +1,8 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
+import java.util.Arrays;
 
 /*
  * AoC
@@ -11,6 +13,8 @@ public class AoC {
         System.out.println("Advent Of Code 2021");
         System.out.println(day1part1());
         System.out.println(day1part2());
+        System.out.println(day2part1());
+        System.out.println(day2part2());
     }
 
     /* 
@@ -25,7 +29,7 @@ public class AoC {
     static String[] readLines(String fileName) {
         try {
             String rowsString = "";
-            File dataFile = new File("Day1.txt");
+            File dataFile = new File(fileName);
             Scanner dataScanner = new Scanner(dataFile);
             while (dataScanner.hasNextLine()) {
                 rowsString = rowsString + dataScanner.nextLine() + ",";
@@ -87,5 +91,57 @@ public class AoC {
             previousSum = currentSum;
         }
         return counter;
+    }
+
+    static int day2part1() {
+        int vert = 0;
+        int hor = 0;
+
+        String[] commands = readLines("Day2.txt");
+        for (String command : commands) {
+            String type = command.split(" ")[0];
+            int amount = Integer.parseInt(command.split(" ")[1]);
+            switch (type) {
+                case "forward":
+                    hor += amount;
+                    break;
+                case "down":
+                    vert += amount;
+                    break;
+                case "up":
+                    vert -= amount;
+                    break;
+                default:
+                    continue;
+            }
+        }
+        return hor * vert;
+    }
+
+    static int day2part2() {
+        int vert = 0;
+        int hor = 0;
+        int aim = 0;
+
+        String[] commands = readLines("Day2.txt");
+        for (String command : commands) {
+            String type = command.split(" ")[0];
+            int amount = Integer.parseInt(command.split(" ")[1]);
+            switch (type) {
+                case "forward":
+                    hor += amount;
+                    vert += aim * amount;
+                    break;
+                case "down":
+                    aim += amount;
+                    break;
+                case "up":
+                    aim -= amount;
+                    break;
+                default:
+                    continue;
+            }
+        }
+        return hor * vert;
     }
 }
